@@ -1,0 +1,10 @@
+<li data-no='<%=data.no %>'>
+    <strong class='guest-name'><%=data.name%></strong>
+    <p><%=data.message.replace( /\n/gi, "<br>" )%></p>
+    <strong>
+        <img alt='삭제' src='<%=contextPath %>/assets/images/user.png'>
+    </strong>
+    <a href='' data-no='<%=data.no %>'>
+        <img alt='삭제' src='<%=contextPath %>/assets/images/delete.png'>
+    </a>
+</li>

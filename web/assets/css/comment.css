@@ -1,0 +1,29 @@
+@CHARSET "UTF-8";
+@import "mysite.css";
+
+#comment			{ width:500px; }
+
+#comment form, 
+#comment table	{ width:100% }
+
+#comment table,	
+#comment table td { border:1px solid #333 }
+#comment table td { padding:5px }
+
+#comment ul		{ width:100%; margin-top:5px }
+#comment ul li	{ width:100%; }
+
+
+#comment.delete-form	{ height:200px }
+#comment.delete-form form {
+	width:300px;
+	padding:10px;
+	border:1px solid #666;
+	border-radius: 10px;
+	margin:50px auto;
+}
+#comment.delete-form a	{ display:block; margin:20px auto; width:110px }
+
+#comment.delete-message p	{ padding:100px; height:50px; text-align:center }
+
+#comment textarea#content	{ width: 100%; border:none; height: 100px; resize: none; outline: none; }

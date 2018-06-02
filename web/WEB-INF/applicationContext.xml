@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/data/jpa
+        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+        ">
+
+    <import resource="secure-config.xml"/>
+    <!-- ************* TX ************* -->
+    <tx:annotation-driven/>
+
+    <!-- ************* CONTEXT ************* -->
+    <context:annotation-config />
+    <context:component-scan
+            base-package="com.cafe24.mysite5.repository,
+                          com.cafe24.mysite5.service,
+                          com.cafe24.mysite5.security">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" />
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Component" />
+    </context:component-scan>
+
+
+
+    <!-- ************* JPA ************* -->
+    <!-- JPA REPOSITORY SACNNING -->
+    <jpa:repositories base-package="com.cafe24.mysite5.repository"/>
+
+
+
+
+    <!-- ORM 사용하는 경우 임의의 UserDetailService 사용 -->
+    <bean id="userDetailService"
+          class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+
+    <!-- ************************** BEAN ************************** -->
+    <!-- DATABASE CONNECTION -->
+    <bean id="dataSource"
+          class="org.apache.commons.dbcp2.BasicDataSource"
+          p:driverClassName="com.mysql.jdbc.Driver"
+          p:url="jdbc:mysql://localhost:3306/mysite5"
+          p:username="mysite5"
+          p:password="mysite5"/>
+
+    <!-- TRANSACTION -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+
+
+
+    <!-- ENTITY MANAGER FACTORY of JPA  -->
+    <bean id="entityManagerFactory"
+          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+          p:dataSource-ref="dataSource"
+          p:packagesToScan="com.cafe24.mysite5.domain">
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.use_sql_comments">true</prop>
+                <prop key="hibernate.id.new_generator_mappings">true</prop>
+                <!--<prop key="hibernate.hbm2ddl.auto">create</prop>-->
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- MyBatis도 사용 가능하다 -->
+
+</beans>
