@@ -18,7 +18,9 @@
         <!-- filters="none"은 더이상 지원하지 않는다 -->
         <!--<intercept-url pattern="/board/**" access="ROLE_USER"/>-->
         <intercept-url pattern="/board/**" access="hasRole('USER')"/>
-        <!-- 별도의 설정이 없다면 /guestbook/이 붙은 주소는 login 페이지로 리다이렉트 -->
+        <!-- access=isAuthenticated()인 경우 별도의 설정이 없다면  -->
+        <!-- /guestbook/이 붙은 주소는 login 페이지로 리다이렉트 -->
+        <!-- access=isAnonymous()인 경우 익명 사용자 접근 가능 -->
         <intercept-url pattern="/guestbook/**" access="isAnonymous()"/>
 
         <!-- 로그인 페이지를 익명의 유저들이 사용할 수 있도록 설정 -->
