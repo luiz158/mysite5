@@ -1,17 +1,18 @@
 package com.cafe24.mysite5.domain;
 
+import com.cafe24.mysite5.enumeration.Enabled;
 import com.cafe24.mysite5.enumeration.Gender;
-import com.cafe24.mysite5.enumeration.Role;
 import com.cafe24.mysite5.enumeration.Withdraw;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class User{
@@ -43,14 +44,21 @@ public class User{
 	@Column( name = "joinDate", nullable = false )
 	private Date joinDate;
 
-	@Enumerated( value = EnumType.STRING )
-	@Column( name = "role", nullable = false, columnDefinition = "ENUM('ADMIN', 'USER')" )
-	private Role role;
+//	@Enumerated( value = EnumType.STRING )
+//	@Column( name = "role", nullable = false, columnDefinition = "ENUM('ADMIN', 'USER')" )
+//	private Role role;
+	/* 한 사용자가 여러 역할, 한 역할에 여러 사용자 맵핑 가능 */
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "users_roles",
+		joinColumns =
+		@JoinColumn(name = "user_id", referencedColumnName = "no"),
+		inverseJoinColumns =
+		@JoinColumn(name = "role_id", referencedColumnName = "no"))
+	private Set<Role> roles;
 
-
 	@Enumerated( value = EnumType.STRING )
-	@Column( name = "withdraw", nullable = false, columnDefinition = "ENUM('Y', 'N')" )
-	private Withdraw withdraw;
+	@Column( name = "enabled", nullable = false, columnDefinition = "ENUM('True', 'False')" )
+	private Enabled enabled;
 
 	@OneToMany( mappedBy = "user" )
 	private List< Board > boards = new ArrayList<>();
@@ -65,8 +73,6 @@ public class User{
 		this.password = password;
 		this.gender = gender;
 		this.joinDate = joinDate;
-		this.role = role;
-		this.withdraw = withdraw;
 	}
 
 	public Long getNo(){
@@ -97,6 +103,7 @@ public class User{
 		return password;
 	}
 
+
 	public void setPassword( String password ){
 		this.password = password;
 	}
@@ -117,20 +124,20 @@ public class User{
 		this.joinDate = joinDate;
 	}
 
-	public Role getRole(){
-		return role;
+	public Set< Role > getRoles(){
+		return roles;
 	}
 
-	public void setRole( Role role ){
-		this.role = role;
+	public void setRoles( Set< Role > roles ){
+		this.roles = roles;
 	}
 
-	public Withdraw getWithdraw(){
-		return withdraw;
+	public Enabled getEnabled(){
+		return enabled;
 	}
 
-	public void setWithdraw( Withdraw withdraw ){
-		this.withdraw = withdraw;
+	public void setEnabled( Enabled enabled ){
+		this.enabled = enabled;
 	}
 
 	public List< Board > getBoards(){
@@ -141,6 +148,7 @@ public class User{
 		this.boards = boards;
 	}
 
+
 	@Override
 	public String toString(){
 		return "User{" +
@@ -150,8 +158,6 @@ public class User{
 				", password='" + password + '\'' +
 				", gender=" + gender +
 				", joinDate=" + joinDate +
-				", role=" + role +
-				", withdraw=" + withdraw +
 				'}';
 	}
 }

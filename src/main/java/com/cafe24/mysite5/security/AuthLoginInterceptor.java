@@ -5,6 +5,7 @@ import com.cafe24.mysite5.domain.User;
 import com.cafe24.mysite5.service.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.UUID;
 
-@EnableWebSecurity
+//@EnableWebSecurity
 public class AuthLoginInterceptor extends HandlerInterceptorAdapter{
 
 	/*@Autowired
@@ -52,6 +53,7 @@ public class AuthLoginInterceptor extends HandlerInterceptorAdapter{
 		HttpSession session = request.getSession();
 		authUser.setEmail( email );
 		session.setAttribute( "authUser", authUser );
+
 		/* 로그인 성공했으므로 세션에 CSRF 토큰값 저장 */
 		session.setAttribute( "_csrf", csrfToken );
 		response.sendRedirect( request.getContextPath() );

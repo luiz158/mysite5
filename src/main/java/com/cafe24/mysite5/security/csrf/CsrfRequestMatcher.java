@@ -19,7 +19,8 @@ public class CsrfRequestMatcher implements RequestMatcher{
 
 	private AntPathRequestMatcher[] requestMatchers = {
 			new AntPathRequestMatcher( "/guestbook/**" ),
-			new AntPathRequestMatcher( "/api/**" )
+			new AntPathRequestMatcher( "/api/**" ),
+			new AntPathRequestMatcher( "/user/auth" )
 	};
 
 	public CsrfRequestMatcher(){

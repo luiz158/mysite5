@@ -15,7 +15,8 @@
         http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
         ">
 
-    <import resource="secure-config.xml"/>
+    <!-- web.xml context-param에 설정 -->
+    <!--<import resource="secure-config.xml"/>-->
     <!-- ************* TX ************* -->
     <tx:annotation-driven/>
 
@@ -40,10 +41,10 @@
 
 
     <!-- ORM 사용하는 경우 임의의 UserDetailService 사용 -->
-    <bean id="userDetailService"
+    <!--<bean id="userDetailService"
           class="org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl">
         <property name="dataSource" ref="dataSource"/>
-    </bean>
+    </bean>-->
 
 
     <!-- ************************** BEAN ************************** -->
@@ -58,7 +59,7 @@
     <!-- TRANSACTION -->
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="dataSource" ref="dataSource" />
-    </bean>
+</bean>
 
 
 

@@ -52,15 +52,15 @@
         <!-- <mvc:interceptor> <mvc:mapping path="/user/**" /> <bean class="com.cafe24.mysite.interceptor.MyInterceptor2"
             /> </mvc:interceptor> -->
         <!-- 로그인 인터셉터 -->
-        <mvc:interceptor>
+        <!--<mvc:interceptor>
             <mvc:mapping path="/user/auth" />
             <bean class="com.cafe24.mysite5.security.AuthLoginInterceptor" />
-        </mvc:interceptor>
+        </mvc:interceptor>-->
         <!-- 로그아웃 인터셉터 -->
-        <mvc:interceptor>
+       <!-- <mvc:interceptor>
             <mvc:mapping path="/user/logout" />
             <bean class="com.cafe24.mysite5.security.AuthLogoutInterceptor" />
-        </mvc:interceptor>
+        </mvc:interceptor>-->
 
         <!-- 인증 인터셉터 -->
         <mvc:interceptor>
